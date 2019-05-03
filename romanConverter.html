@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Roman Numeral Convertor</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="numToRom col-6">
+        <h1>Numeric to Roman Convertor</h1>
+        <h3>Enter the number to be converted in the input box</h3>
+        <label>Number</label>
+        <input type="text" id="numberToConvert" /><br />
+        <label for="staticRomanNumeral" class="sr-only">RomanNumeral</label>
+        <p id="staticRomanNumeral"></p>
+        <button onclick="convertToRoman()" class="btn btn-primary mb-2">
+          Convert
+        </button>
+      </div>
+      <div class="RomToNum col-6">
+        <h1>Roman Numeral to Number Convertor</h1>
+        <h3>Enter the Roman Numeral to be converted in the input box</h3>
+        <label>Roman Numeral</label>
+        <input type="text" id="romanToConvert" /><br />
+        <label for="staticNumeric">Numeber</label>
+        <p id="staticNumeric"></p>
+        <button onclick="convertToNumeric()" class="btn btn-primary mb-2">
+          Convert
+        </button>
+      </div>
+    </div>
+    <script type="text/javascript">
+      //   convertToRoman(num);
+      //   convertToNumeric("MDXXVII");
+
+      function convertToRoman() {
+        let num = document.getElementById("numberToConvert").value;
+        console.log("number entered: ", num);
+        let roman = [];
+        let x,
+          y = 0;
+
+        if (num >= 1000) {
+          romanLoop(1000, "M");
+          assignValue(1000);
+        }
+        if (num >= 900 && num < 1000) {
+          assignValue(900, "CM");
+        }
+        if (num >= 500) {
+          assignValue(500, "D");
+        }
+        if (num >= 400 && num < 500) {
+          assignValue(400, "CD");
+        }
+        if (num >= 100) {
+          romanLoop(100, "C");
+          assignValue(100);
+        }
+        if (num >= 90 && num < 100) {
+          assignValue(90, "XC");
+        }
+        if (num >= 50) {
+          assignValue(50, "L");
+        }
+        if (num >= 40 && num < 50) {
+          assignValue(40, "XL");
+        }
+        if (num >= 10) {
+          romanLoop(10, "X");
+          assignValue(10);
+        }
+        if (num === 9) {
+          assignValue(9, "IX");
+        }
+        if (num >= 5) {
+          assignValue(5, "V");
+        }
+        if (num === 4) {
+          assignValue(4, "IV");
+        }
+        if (num >= 1 && num < 4) {
+          romanLoop(1, "I");
+          assignValue(1);
+        }
+        function assignValue(mod, alpha) {
+          roman.push(alpha);
+          x = num % mod;
+          num = x;
+        }
+        function romanLoop(dividend, alpha) {
+          y = Math.floor(num / dividend);
+          do {
+            roman.push(alpha);
+            y -= 1;
+          } while (y > 0);
+        }
+        document.getElementById("staticRomanNumeral").innerHTML = roman.join(
+          ""
+        );
+      }
+
+      function convertToNumeric() {
+        let str = document.getElementById("romanToConvert").value;
+        let numeral = 0;
+        let roman = str.split("");
+        console.log("Roman Numeral: ", roman);
+        for (let i = 0; i < roman.length; i++) {
+          if (roman[i] === "M") {
+            numeral += 1000;
+          } else if (roman[i] === "D") {
+            numeral += 500;
+          } else if (roman[i] === "C") {
+            numeral += 100;
+          } else if (roman[i] === "L") {
+            numeral += 50;
+          } else if (roman[i] === "X") {
+            numeral += 10;
+          } else if (roman[i] === "V") {
+            numeral += 5;
+          } else if (roman[i] === "I") {
+            numeral += 1;
+          }
+        }
+        // return numeral;
+        document.getElementById("staticNumeric").innerHTML = numeral;
+      }
+    </script>
+  </body>
+</html>
